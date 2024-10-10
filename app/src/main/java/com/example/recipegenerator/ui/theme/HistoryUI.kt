@@ -91,7 +91,7 @@ fun HistoryItemRow(recipe: Recipe, onDelete: () -> Unit) {
 
         // ゴミ箱アイコン
         Image(
-            painter = painterResource(id = R.drawable.baseline_delete_24),
+            painter = painterResource(id = android.R.drawable.ic_menu_gallery),
             contentDescription = "Delete",
             modifier = Modifier
                 .size(60.dp)
