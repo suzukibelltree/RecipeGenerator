@@ -37,7 +37,6 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
         text = "Hello $name!",
         modifier = modifier
     )
-    HistoryScreen()
 }
 
 @Preview(showBackground = true)
