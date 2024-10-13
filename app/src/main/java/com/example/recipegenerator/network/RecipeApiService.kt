@@ -12,7 +12,7 @@ import retrofit2.http.Query
 class ApiClient {
     private companion object {
         private const val BASE_URL = "https://app.rakuten.co.jp/services/api/"
-        //private const val APPLICATION_ID = "ここにAPIキーを入れる"
+        //private const val APPLICATION_ID = "ここにApiキーを入れる"
     }
 
     private val gson = GsonBuilder()
