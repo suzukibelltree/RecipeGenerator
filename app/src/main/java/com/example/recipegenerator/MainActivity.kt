@@ -24,10 +24,6 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val recipeViewModel: RecipeViewModel = viewModel()
-                    HomeScreen(
-                        recipeUiState = recipeViewModel.recipeUiState,
-                        modifier = Modifier.fillMaxSize()
-                    )
                 }
             }
         }
