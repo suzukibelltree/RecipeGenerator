@@ -17,7 +17,7 @@ data class ApiData(
 //ResultDataのプロパティにお気に入り登録されたかを表す変数を追加したデータクラス(UI表示に関してはこちらを操作する)
 data class Result(
     val apiData: ApiData,
-    val isFavorite: Boolean = false
+    var isFavorite: Boolean = false
 )
 
 //ResultUIのリストを格納するためのデータクラス

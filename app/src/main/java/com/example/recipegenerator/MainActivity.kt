@@ -10,7 +10,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.recipegenerator.ViewModel.RecipeViewModel
-import com.example.recipegenerator.components.HomeScreen
+import com.example.recipegenerator.components.RecipeGenerateApp
 import com.example.recipegenerator.ui.theme.RecipeGeneratorTheme
 
 class MainActivity : ComponentActivity() {
@@ -24,6 +24,10 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val recipeViewModel: RecipeViewModel = viewModel()
+                    RecipeGenerateApp(
+                        recipeUiState = recipeViewModel.recipeUiState,
+                        modifier = Modifier.fillMaxSize()
+                    )
                 }
             }
         }
