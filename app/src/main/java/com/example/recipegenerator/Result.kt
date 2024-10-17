@@ -6,6 +6,8 @@ import com.google.gson.annotations.SerializedName
 data class ApiData(
     @SerializedName("recipeTitle")
     val Title: String,
+    @SerializedName("recipeUrl")
+    val url: String,
     @SerializedName("foodImageUrl")
     val foodimage: String,
     @SerializedName("recipeCost")
