@@ -28,7 +28,7 @@ class ApiClient {
     }
 
     suspend fun fetchResults(): Response<ResultResponse> {
-        return apiService.fetchResults(getAPIKey())
+        return apiService.fetchResults(ApiKey().getApiKey())
     }
 }
 
