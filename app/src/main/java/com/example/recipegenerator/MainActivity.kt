@@ -10,6 +10,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.recipegenerator.ViewModel.RecipeViewModel
+import com.example.recipegenerator.components.CategoryRanking
 import com.example.recipegenerator.components.RecipeGenerateApp
 import com.example.recipegenerator.ui.theme.RecipeGeneratorTheme
 
@@ -23,11 +24,12 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val recipeViewModel: RecipeViewModel = viewModel()
-                    RecipeGenerateApp(
-                        recipeUiState = recipeViewModel.recipeUiState,
-                        modifier = Modifier.fillMaxSize()
-                    )
+//                    val recipeViewModel: RecipeViewModel = viewModel()
+//                    RecipeGenerateApp(
+//                        recipeUiState = recipeViewModel.recipeUiState,
+//                        modifier = Modifier.fillMaxSize()
+//                    )
+                    CategoryRanking()
                 }
             }
         }
