@@ -35,8 +35,8 @@ class ApiClient {
     }
 
     //h_ryoが使う関数/カテゴリ取得
-    suspend fun fetchRecipeCategory(): Response<Result> {
-        return apiService.fetchRecipeCategory(ApiKey().categoryApiKey())
+    suspend fun fetchRecipeCategory(categoryType: String): Response<Result> {
+        return apiService.fetchRecipeCategory(ApiKey().categoryApiKey(), categoryType)
     }
 
     //h_ryoが使う関数/ランキング取得
@@ -55,7 +55,8 @@ interface ApiService {
     //h_ryoが使う関数/カテゴリ取得
     @GET("Recipe/CategoryList/20170426")
     suspend fun fetchRecipeCategory(
-        @Query("applicationId") applicationId: String
+        @Query("applicationId") applicationId: String,
+        @Query("categoryType") categoryType: String
     ) : Response<Result>
 
     //h_ryoが使う関数/ランキング取得
