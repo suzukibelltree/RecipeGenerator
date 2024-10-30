@@ -8,8 +8,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+<<<<<<< HEAD
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.recipegenerator.ui.theme.HistoryScreen
+=======
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.recipegenerator.ViewModel.RecipeViewModel
+import com.example.recipegenerator.components.RecipeGenerateApp
+>>>>>>> origin/develop
 import com.example.recipegenerator.ui.theme.RecipeGeneratorTheme
 
 class MainActivity : ComponentActivity() {
@@ -22,7 +28,11 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-
+                    val recipeViewModel: RecipeViewModel = viewModel()
+                    RecipeGenerateApp(
+                        recipeUiState = recipeViewModel.recipeUiState,
+                        modifier = Modifier.fillMaxSize()
+                    )
                 }
             }
         }
