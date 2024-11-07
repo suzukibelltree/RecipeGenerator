@@ -10,7 +10,10 @@ import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
@@ -22,7 +25,7 @@ fun BottomNavigation(navController: NavController) {
     一番下のナビゲーションバー
      */
     var selectedTabIndex by remember {
-        mutableMapOf(0)
+        mutableStateOf(0)
     }
 
     TabRow(selectedTabIndex = selectedTabIndex) {
@@ -35,23 +38,23 @@ fun BottomNavigation(navController: NavController) {
         )
         NavigateTab(
             navController = navController,
-            route = "history",
-            txt = "りれき",
-            icon = Icons.Default.Refresh,
+            route = "favorites",
+            txt = "おきにいり",
+            icon = Icons.Default.Favorite,
             onClick = { selectedTabIndex = 1 }
         )
         NavigateTab(
             navController = navController,
-            route = "favorites",
-            txt = "おきにいり",
-            icon = Icons.Default.Favorite,
+            route = "history",
+            txt = "りれき",
+            icon = Icons.Default.Refresh,
             onClick = { selectedTabIndex = 2 }
         )
     }
 }
 
 @Composable
-fun NavigateTab(navController: NavControler, route: String, txt: String, icon: ImageVector, onClick: () -> Unit) {
+fun NavigateTab(navController: NavController, route: String, txt: String, icon: ImageVector, onClick: () -> Unit) {
     Tab(
         selected =  false,
         onClick = {
