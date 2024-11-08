@@ -14,12 +14,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.recipegenerator.ViewModel.CategoryViewModel
 
 @Composable
 fun CategoryList(
     viewModel: CategoryViewModel,
-    innerPadding: PaddingValues
+    innerPadding: PaddingValues,
+    navController: NavController
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
@@ -38,7 +40,7 @@ fun CategoryList(
             }
 
             items(viewModel.largeList.subList(0, 12)) { large ->
-                LargeCategoryCard(large, Modifier.padding(8.dp))
+                LargeCategoryCard(large, Modifier.padding(8.dp), viewModel, navController)
             }
 
             item(span = { GridItemSpan(maxCurrentLineSpan) }) {
@@ -47,7 +49,7 @@ fun CategoryList(
             }
 
             items(viewModel.largeList.subList(12, 20)) { large ->
-                LargeCategoryCard(large, Modifier.padding(8.dp))
+                LargeCategoryCard(large, Modifier.padding(8.dp), viewModel, navController)
             }
 
             item(span = { GridItemSpan(maxCurrentLineSpan) }) {
@@ -56,7 +58,7 @@ fun CategoryList(
             }
 
             items(viewModel.largeList.subList(20, 27)) { large ->
-                LargeCategoryCard(large, Modifier.padding(8.dp))
+                LargeCategoryCard(large, Modifier.padding(8.dp), viewModel, navController)
             }
 
             item {}
@@ -67,7 +69,7 @@ fun CategoryList(
             }
 
             items(viewModel.largeList.subList(27, 35)) { large ->
-                LargeCategoryCard(large, Modifier.padding(8.dp))
+                LargeCategoryCard(large, Modifier.padding(8.dp), viewModel, navController)
             }
 
             item(span = { GridItemSpan(maxCurrentLineSpan) }) {
@@ -76,7 +78,7 @@ fun CategoryList(
             }
 
             items(viewModel.largeList.subList(35, 43)) { large ->
-                LargeCategoryCard(large, Modifier.padding(8.dp))
+                LargeCategoryCard(large, Modifier.padding(8.dp), viewModel, navController)
             }
         } else {
             item { CircularProgressIndicator() }
