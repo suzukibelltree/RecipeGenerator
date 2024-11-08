@@ -16,6 +16,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.recipegenerator.ViewModel.RecipeViewModel
 import com.example.recipegenerator.components.BottomNavigation
+import com.example.recipegenerator.components.CategoryRanking
+import com.example.recipegenerator.components.HomeNavigation
 import com.example.recipegenerator.components.RecipeGenerateApp
 import com.example.recipegenerator.ui.theme.RecipeGeneratorTheme
 
@@ -29,6 +31,9 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
 
                 Scaffold(
+                    topBar = {
+                        HomeNavigation(navController = navController)
+                    },
                     bottomBar = {
                         BottomNavigation(navController = navController)
                     }
@@ -42,15 +47,19 @@ class MainActivity : ComponentActivity() {
                         // ナビゲーションホストの設定
                         NavHost(
                             navController = navController,
-                            startDestination = "Home",
+                            startDestination = "ranking",
                         ) {
-                            composable(route = "home") {
+                            composable(route = "ranking") {
                                 val recipeViewModel: RecipeViewModel = viewModel()
                                 RecipeGenerateApp(
                                     recipeUiState = recipeViewModel.recipeUiState,
                                     modifier = Modifier.fillMaxSize()
                                 )
                             }
+                            composable(route = "categories") {
+                                CategoryRanking()
+                            }
+
                             composable(route = "favorite") {
 
                             }

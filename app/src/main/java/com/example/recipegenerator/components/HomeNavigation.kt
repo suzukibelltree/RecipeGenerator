@@ -2,9 +2,7 @@ package com.example.recipegenerator.components
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
@@ -20,41 +18,33 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 
 @Composable
-fun BottomNavigation(navController: NavController) {
+fun HomeNavigation(navController: NavController) {
     /*
-    一番下のナビゲーションバー
+    ホーム画面に表示するNavigationBar
      */
+
     var selectedTabIndex by remember {
-        mutableStateOf(0)
+        mutableStateOf( 0 )
     }
 
     TabRow(selectedTabIndex = selectedTabIndex) {
-        NavigateTab(
+        NavigateTextTab(
             navController = navController,
             route = "ranking",
-            txt = "ホーム",
-            icon = Icons.Default.Home,
+            txt = "ランキング",
             onClick = { selectedTabIndex = 0 }
         )
-        NavigateTab(
+        NavigateTextTab(
             navController = navController,
-            route = "favorites",
-            txt = "おきにいり",
-            icon = Icons.Default.Favorite,
+            route = "categories",
+            txt = "カテゴリ",
             onClick = { selectedTabIndex = 1 }
-        )
-        NavigateTab(
-            navController = navController,
-            route = "history",
-            txt = "りれき",
-            icon = Icons.Default.Refresh,
-            onClick = { selectedTabIndex = 2 }
         )
     }
 }
 
 @Composable
-fun NavigateTab(navController: NavController, route: String, txt: String, icon: ImageVector, onClick: () -> Unit) {
+fun NavigateTextTab(navController: NavController, route: String, txt: String, onClick: () -> Unit) {
     Tab(
         selected =  false,
         onClick = { if (navController.currentDestination!!.route != route) {
@@ -62,12 +52,5 @@ fun NavigateTab(navController: NavController, route: String, txt: String, icon: 
             onClick()
         } },
         text = { Text(text = txt) },
-        icon = {
-            Icon(
-                modifier = Modifier.size(35.dp),
-                imageVector = icon,
-                contentDescription = "アイコン"
-            )
-        }
     )
 }
