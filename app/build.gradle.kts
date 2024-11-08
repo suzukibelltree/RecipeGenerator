@@ -75,7 +75,7 @@ dependencies {
 
     // Coil
     implementation("io.coil-kt:coil-compose:2.4.0")
-    implementation(libs.androidx.runtime.livedata)
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.7")
 
     //Navigation
     implementation("androidx.navigation:navigation-compose:2.8.0")

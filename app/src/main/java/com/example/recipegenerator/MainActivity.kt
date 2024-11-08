@@ -5,12 +5,19 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.recipegenerator.ViewModel.RecipeViewModel
+import com.example.recipegenerator.components.BottomNavigation
 import com.example.recipegenerator.components.CategoryRanking
+import com.example.recipegenerator.components.HomeNavigation
 import com.example.recipegenerator.components.RecipeGenerateApp
 import com.example.recipegenerator.ui.theme.RecipeGeneratorTheme
 
@@ -20,16 +27,48 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             RecipeGeneratorTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-//                    val recipeViewModel: RecipeViewModel = viewModel()
-//                    RecipeGenerateApp(
-//                        recipeUiState = recipeViewModel.recipeUiState,
-//                        modifier = Modifier.fillMaxSize()
-//                    )
-                    CategoryRanking()
+                // navControllerを作成
+                val navController = rememberNavController()
+
+                Scaffold(
+                    topBar = {
+                        HomeNavigation(navController = navController)
+                    },
+                    bottomBar = {
+                        BottomNavigation(navController = navController)
+                    }
+                ) { innerpadding ->
+                    Surface(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(innerpadding),
+                        color = MaterialTheme.colorScheme.background
+                    ) {
+                        // ナビゲーションホストの設定
+                        NavHost(
+                            navController = navController,
+                            startDestination = "ranking",
+                        ) {
+                            composable(route = "ranking") {
+                                val recipeViewModel: RecipeViewModel = viewModel()
+                                RecipeGenerateApp(
+                                    recipeUiState = recipeViewModel.recipeUiState,
+                                    modifier = Modifier.fillMaxSize()
+                                )
+                            }
+                            composable(route = "categories") {
+                                CategoryRanking()
+                            }
+
+                            composable(route = "favorite") {
+
+                            }
+                            composable(route = "history") {
+
+                            }
+
+                        }
+                    }
                 }
             }
         }
