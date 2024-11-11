@@ -17,9 +17,21 @@ import com.example.recipegenerator.DataClass.Small
 import com.example.recipegenerator.ViewModel.CategoryViewModel
 
 @Composable
-fun SmallCategoryCard(category: Small, modifier: Modifier = Modifier, viewModel: CategoryViewModel) {
+fun SmallCategoryCard(
+    category: Small,
+    modifier: Modifier = Modifier,
+    viewModel: CategoryViewModel,
+    navController: NavController
+) {
     Card(
-        modifier = modifier,
+        modifier = modifier
+            .clickable {
+                viewModel.selectedCategoryName.value = category.categoryName
+                viewModel.connectedId.value = viewModel.selectedLargeId.value + "-" + category.parentCategoryId + "-" + category.categoryId
+                navController.navigate("small")
+                viewModel.showMoreCategory.value = false
+
+            },
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Text(
@@ -42,8 +54,10 @@ fun MediumCategoryCard(
     Card(
         modifier = modifier
             .clickable {
-                viewModel.selectedParentId.value = category.categoryId
-                navController.navigate("small")
+                viewModel.selectedCategoryName.value = category.categoryName
+                viewModel.selectedMediumId.value = category.categoryId
+                viewModel.connectedId.value = category.parentCategoryId + "-" + category.categoryId
+                navController.navigate("medium")
                 viewModel.showMoreCategory.value = false
                        },
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
@@ -68,8 +82,9 @@ fun LargeCategoryCard(
     Card(
         modifier = modifier
             .clickable {
-                viewModel.selectedParentId.value = category.categoryId
-                navController.navigate("medium")
+                viewModel.selectedCategoryName.value = category.categoryName
+                viewModel.selectedLargeId.value = category.categoryId
+                navController.navigate("large")
                 viewModel.showMoreCategory.value = false
                        },
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)

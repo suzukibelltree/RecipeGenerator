@@ -14,20 +14,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.recipegenerator.DataClass.Large
 import com.example.recipegenerator.ViewModel.CategoryViewModel
 import com.example.recipegenerator.network.ApiClient
 import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlin.collections.addAll
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -74,15 +68,18 @@ fun CategoryRanking() {
             )
         }
     ) { innerPadding ->
-        NavHost(navController, startDestination = "large") {
-            composable("large") {
+        NavHost(navController, startDestination = "category") {
+            composable("category") {
                 CategoryList(viewModel, innerPadding, navController)
             }
+            composable("large") {
+                LargeCategoryRanking(viewModel.selectedCategoryName.value, viewModel.selectedLargeId.value, viewModel, apiClient, coroutineScope, innerPadding, navController)
+            }
             composable("medium") {
-                MediumCategoryList(viewModel.selectedParentId.value, viewModel, apiClient, coroutineScope, innerPadding, navController)
+                MediumCategoryRanking(viewModel.selectedCategoryName.value, viewModel.selectedMediumId.value, viewModel.connectedId.value, viewModel, apiClient, coroutineScope, innerPadding, navController)
             }
             composable("small") {
-                SmallCategoryList(viewModel.selectedParentId.value, viewModel, apiClient, coroutineScope, innerPadding)
+                SmallCategoryRanking(viewModel.selectedCategoryName.value, viewModel.connectedId.value, viewModel, apiClient, coroutineScope, innerPadding)
             }
         }
     }
