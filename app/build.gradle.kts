@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.recipegenerator"
-        minSdk = 30 
+        minSdk = 31
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -75,8 +75,10 @@ dependencies {
 
     // Coil
     implementation("io.coil-kt:coil-compose:2.4.0")
-    implementation(libs.androidx.navigation.runtime.ktx)
-    implementation(libs.androidx.navigation.compose)
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.7")
+
+    //Navigation
+    implementation("androidx.navigation:navigation-compose:2.8.0")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

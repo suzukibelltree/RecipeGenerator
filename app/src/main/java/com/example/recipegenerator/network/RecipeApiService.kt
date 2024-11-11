@@ -1,5 +1,7 @@
 package com.example.recipegenerator.network
 
+import com.example.recipegenerator.DataClass.RankingRecipeData
+import com.example.recipegenerator.DataClass.Result
 import com.example.recipegenerator.ResultResponse
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
@@ -30,6 +32,16 @@ class ApiClient {
     suspend fun fetchResults(): Response<ResultResponse> {
         return apiService.fetchResults(ApiKey().getApiKey())
     }
+
+    //h_ryoが使う関数/カテゴリ取得
+    suspend fun fetchRecipeCategory(categoryType: String): Response<Result> {
+        return apiService.fetchRecipeCategory(ApiKey().categoryApiKey(), categoryType)
+    }
+
+    //h_ryoが使う関数/ランキング取得
+    suspend fun fetchRecipeRanking(categoryId: String): Response<RankingRecipeData> {
+        return apiService.fetchRecipeRanking(ApiKey().getApiKey(), categoryId)
+    }
 }
 
 interface ApiService {
@@ -38,4 +50,18 @@ interface ApiService {
         @Query("applicationId") applicationId: String,
         @Query("categoryId") categoryId: Int = 30,
     ): Response<ResultResponse>
+
+    //h_ryoが使う関数/カテゴリ取得
+    @GET("Recipe/CategoryList/20170426")
+    suspend fun fetchRecipeCategory(
+        @Query("applicationId") applicationId: String,
+        @Query("categoryType") categoryType: String
+    ) : Response<Result>
+
+    //h_ryoが使う関数/ランキング取得
+    @GET("Recipe/CategoryRanking/20170426")
+    suspend fun fetchRecipeRanking(
+        @Query("applicationId") applicationId: String,
+        @Query("categoryId") categoryId: String
+    ) : Response<RankingRecipeData>
 }
