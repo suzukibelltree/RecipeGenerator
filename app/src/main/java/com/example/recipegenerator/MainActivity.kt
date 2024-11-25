@@ -10,10 +10,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-<<<<<<< HEAD
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.recipegenerator.ui.theme.HistoryScreen
-=======
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -23,7 +19,7 @@ import com.example.recipegenerator.components.BottomNavigation
 import com.example.recipegenerator.components.CategoryRanking
 import com.example.recipegenerator.components.HomeNavigation
 import com.example.recipegenerator.components.RecipeGenerateApp
->>>>>>> origin/develop
+import com.example.recipegenerator.components.showFavoriteRecipesList
 import com.example.recipegenerator.ui.theme.RecipeGeneratorTheme
 
 class MainActivity : ComponentActivity() {
@@ -34,7 +30,7 @@ class MainActivity : ComponentActivity() {
             RecipeGeneratorTheme {
                 // navControllerを作成
                 val navController = rememberNavController()
-
+                val recipeViewModel: RecipeViewModel = viewModel()
                 Scaffold(
                     topBar = {
                         HomeNavigation(navController = navController)
@@ -55,7 +51,6 @@ class MainActivity : ComponentActivity() {
                             startDestination = "ranking",
                         ) {
                             composable(route = "ranking") {
-                                val recipeViewModel: RecipeViewModel = viewModel()
                                 RecipeGenerateApp(
                                     recipeUiState = recipeViewModel.recipeUiState,
                                     modifier = Modifier.fillMaxSize()
@@ -65,8 +60,11 @@ class MainActivity : ComponentActivity() {
                                 CategoryRanking()
                             }
 
-                            composable(route = "favorite") {
-
+                            composable(route = "favorites") {
+                                showFavoriteRecipesList(
+                                    recipeUiState= recipeViewModel.recipeUiState,
+                                    modifier=Modifier.fillMaxSize()
+                                )
                             }
                             composable(route = "history") {
 
