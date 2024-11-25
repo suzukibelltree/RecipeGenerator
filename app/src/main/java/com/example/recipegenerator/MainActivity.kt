@@ -19,6 +19,7 @@ import com.example.recipegenerator.components.BottomNavigation
 import com.example.recipegenerator.components.CategoryRanking
 import com.example.recipegenerator.components.HomeNavigation
 import com.example.recipegenerator.components.RecipeGenerateApp
+import com.example.recipegenerator.components.showFavoriteRecipesList
 import com.example.recipegenerator.ui.theme.RecipeGeneratorTheme
 
 class MainActivity : ComponentActivity() {
@@ -29,7 +30,7 @@ class MainActivity : ComponentActivity() {
             RecipeGeneratorTheme {
                 // navControllerを作成
                 val navController = rememberNavController()
-
+                val recipeViewModel: RecipeViewModel = viewModel()
                 Scaffold(
                     topBar = {
                         HomeNavigation(navController = navController)
@@ -50,7 +51,6 @@ class MainActivity : ComponentActivity() {
                             startDestination = "ranking",
                         ) {
                             composable(route = "ranking") {
-                                val recipeViewModel: RecipeViewModel = viewModel()
                                 RecipeGenerateApp(
                                     recipeUiState = recipeViewModel.recipeUiState,
                                     modifier = Modifier.fillMaxSize()
@@ -60,8 +60,11 @@ class MainActivity : ComponentActivity() {
                                 CategoryRanking()
                             }
 
-                            composable(route = "favorite") {
-
+                            composable(route = "favorites") {
+                                showFavoriteRecipesList(
+                                    recipeUiState= recipeViewModel.recipeUiState,
+                                    modifier=Modifier.fillMaxSize()
+                                )
                             }
                             composable(route = "history") {
 
