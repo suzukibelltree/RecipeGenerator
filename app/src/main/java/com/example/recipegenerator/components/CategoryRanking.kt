@@ -58,8 +58,8 @@ fun CategoryRanking() {
                             modifier = Modifier.padding(16.dp)
                         )
                         TextField(
-                            value = "",
-                            onValueChange = { /*TODO*/ },
+                            value = viewModel.searchCategoryText.value,
+                            onValueChange = { viewModel.searchCategoryText.value = it},
                             label = { Text("カテゴリ名") },
                             placeholder = { Text("例)肉、カレー") }
                         )

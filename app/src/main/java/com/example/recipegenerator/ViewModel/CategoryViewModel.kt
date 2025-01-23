@@ -23,5 +23,6 @@ class CategoryViewModel : ViewModel() {
     var isLargeCategoryLoaded = mutableStateOf(false) // 大カテゴリが読み込まれたかどうか
     var isMediumCategoryLoaded = mutableStateOf(false) // 中カテゴリが読み込まれたかどうか
     var isSmallCategoryLoaded = mutableStateOf(false) // 小カテゴリが読み込まれたかどうか
+    val searchCategoryText = mutableStateOf("") // 検索されたカテゴリ名
 
 }
