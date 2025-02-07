@@ -14,12 +14,14 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.recipegenerator.ViewModel.RecipeUiState
 import com.example.recipegenerator.ViewModel.RecipeViewModel
 import com.example.recipegenerator.components.BottomNavigation
 import com.example.recipegenerator.components.CategoryRanking
 import com.example.recipegenerator.components.HomeNavigation
+import com.example.recipegenerator.components.RecipeDetailScreen
 import com.example.recipegenerator.components.RecipeGenerateApp
-import com.example.recipegenerator.components.showFavoriteRecipesList
+import com.example.recipegenerator.components.ShowFavoriteRecipesList
 import com.example.recipegenerator.ui.theme.RecipeGeneratorTheme
 
 class MainActivity : ComponentActivity() {
@@ -53,7 +55,8 @@ class MainActivity : ComponentActivity() {
                             composable(route = "ranking") {
                                 RecipeGenerateApp(
                                     recipeUiState = recipeViewModel.recipeUiState,
-                                    modifier = Modifier.fillMaxSize()
+                                    modifier = Modifier.fillMaxSize(),
+                                    navController = navController
                                 )
                             }
                             composable(route = "categories") {
@@ -61,13 +64,24 @@ class MainActivity : ComponentActivity() {
                             }
 
                             composable(route = "favorites") {
-                                showFavoriteRecipesList(
-                                    recipeUiState= recipeViewModel.recipeUiState,
-                                    modifier=Modifier.fillMaxSize()
+                                ShowFavoriteRecipesList(
+                                    recipeUiState = recipeViewModel.recipeUiState,
+                                    modifier = Modifier.fillMaxSize(),
+                                    navController = navController
                                 )
                             }
                             composable(route = "history") {
 
+                            }
+                            composable(route = "detail/{recipeIndex}") { backStackEntry ->
+                                val index = backStackEntry.arguments?.getString("recipeIndex")
+                                    ?.toIntOrNull()
+                                val recipeList =
+                                    (recipeViewModel.recipeUiState as? RecipeUiState.Success)?.results
+
+                                if (index != null && recipeList != null && index in recipeList.indices) {
+                                    RecipeDetailScreen(recipe = recipeList[index])
+                                }
                             }
 
                         }
