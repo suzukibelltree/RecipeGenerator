@@ -1,8 +1,5 @@
 package com.example.recipegenerator.components
 
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,38 +17,35 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.recipegenerator.Result
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 @Composable
 fun RecipeCard(
     result: Result,
+    navController: NavController,
+    index: Int,
     modifier: Modifier = Modifier,
-){
+) {
     var isFavorite by remember { mutableStateOf(result.isFavorite) }
-    val context = LocalContext.current
     Card(
         colors = CardDefaults.cardColors(),
         modifier = modifier
             .fillMaxWidth()
             .padding(16.dp)
             .clickable {
-                onCardClick(context,result)
+                navController.navigate("detail/$index") // ここで渡された index を使う
             }
     ) {
         Column {
@@ -73,12 +67,12 @@ fun RecipeCard(
                 )
                 Column {
                     Text(
-                        text="コスト: ${result.apiData.cost}",
+                        text = "コスト: ${result.apiData.cost}",
                         modifier = Modifier.padding(8.dp),
                         fontSize = 16.sp
                     )
                     Text(
-                        text="所要時間: ${result.apiData.indication}",
+                        text = "所要時間: ${result.apiData.indication}",
                         modifier = Modifier.padding(8.dp),
                         fontSize = 16.sp
                     )
@@ -97,9 +91,9 @@ fun RecipeCard(
                     Icon(
                         imageVector = Icons.Default.Favorite,
                         contentDescription = null,
-                        tint = if(isFavorite){
+                        tint = if (isFavorite) {
                             Color.Red
-                        }else{
+                        } else {
                             Color.Gray
                         }
                     )
@@ -107,15 +101,4 @@ fun RecipeCard(
             }
         }
     }
-}
-
-
-fun onCardClick(
-    context: Context,
-    result:Result
-) {
-    val intent =Intent(Intent.ACTION_VIEW).apply{
-        data=Uri.parse(result.apiData.url)
-    }
-    context.startActivity(intent)
 }
