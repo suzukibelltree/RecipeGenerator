@@ -1,21 +1,27 @@
 package com.example.recipegenerator.components
 
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
 import com.example.recipegenerator.Result
 
 @Composable
 fun PopularRecipeList(
-    recipes:List<Result>,
-    modifier: Modifier = Modifier
-){
+    recipes: List<Result>,
+    modifier: Modifier = Modifier,
+    navController: NavController
+) {
     LazyColumn(
         modifier = modifier
     ) {
-        items(recipes) { recipe ->
-            RecipeCard(result = recipe)
+        itemsIndexed(recipes) { index, recipe ->
+            RecipeCard(
+                result = recipe,
+                navController = navController,
+                index = index
+            )
         }
     }
 }
