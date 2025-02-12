@@ -46,23 +46,15 @@ fun MediumCategoryRanking(
     viewModel: CategoryViewModel,
     apiClient: ApiClient,
     coroutineScope: CoroutineScope,
-    innerPadding: PaddingValues,
     navController: NavController
 ) {
     LaunchedEffect(Unit, viewModel.isSmallCategoryLoaded) {
         coroutineScope.launch {
-            if (!viewModel.isSmallCategoryLoaded.value) {
-                val smallDeferred = async { apiClient.fetchRecipeCategory("small") }
-                val smallResponse = smallDeferred.await()
-                smallResponse.body()?.result?.small?.let { viewModel.smallList.addAll(it) }
-                viewModel.isSmallCategoryLoaded.value = true
-            }
             val mediumRankingDeferred = async { apiClient.fetchRecipeRanking(grandparentParentCategoryId) }
             val mediumRankingResponse = mediumRankingDeferred.await()
             viewModel.mediumRankingList.clear()
             mediumRankingResponse.body()?.result?.let { viewModel.mediumRankingList.addAll(it) }
         }
-
     }
 
     val context = LocalContext.current
@@ -70,9 +62,7 @@ fun MediumCategoryRanking(
     if (viewModel.smallList.isEmpty() || viewModel.mediumRankingList.isEmpty()) {
         CircularProgressIndicator()
     } else {
-        LazyColumn(
-            modifier = Modifier.padding(innerPadding)
-        ) {
+        LazyColumn {
             item { Text(text = selectedCategoryName, fontSize = 24.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(16.dp)) }
 
             item { Text(text = "さらに絞る", fontSize = 18.sp, modifier = Modifier.padding(16.dp)) }
