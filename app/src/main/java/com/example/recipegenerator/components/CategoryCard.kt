@@ -1,5 +1,6 @@
 package com.example.recipegenerator.components
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
@@ -27,7 +28,10 @@ fun SmallCategoryCard(
         modifier = modifier
             .clickable {
                 viewModel.selectedCategoryName.value = category.categoryName
+                Log.d("selectedCategoryName", viewModel.selectedCategoryName.value)
+                viewModel.getGrandParentCategoryId(small = category)
                 viewModel.connectedId.value = viewModel.selectedLargeId.value + "-" + category.parentCategoryId + "-" + category.categoryId
+                Log.d("connectedId", viewModel.connectedId.value)
                 navController.navigate("small")
                 viewModel.showMoreCategory.value = false
 
