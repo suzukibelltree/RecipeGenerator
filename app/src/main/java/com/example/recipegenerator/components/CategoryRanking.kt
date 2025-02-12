@@ -1,8 +1,11 @@
 package com.example.recipegenerator.components
 
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -14,6 +17,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -43,8 +48,10 @@ fun CategoryRanking() {
         }
     }
 
+    val keyboardController = LocalSoftwareKeyboardController.current
+
     Scaffold(
-        modifier = Modifier.statusBarsPadding(),
+        modifier = Modifier.fillMaxSize(),
         topBar = {
             TopAppBar(
                 colors = topAppBarColors(
@@ -61,7 +68,16 @@ fun CategoryRanking() {
                             value = viewModel.searchCategoryText.value,
                             onValueChange = { viewModel.searchCategoryText.value = it},
                             label = { Text("カテゴリ名") },
-                            placeholder = { Text("例)肉、カレー") }
+                            placeholder = { Text("例)肉、カレー") },
+                            maxLines = 1,
+                            keyboardOptions = KeyboardOptions.Default.copy(
+                                imeAction = ImeAction.Done
+                            ),
+                            keyboardActions = KeyboardActions(
+                                onDone = {
+                                    keyboardController?.hide()
+                                }
+                            )
                         )
                     }
                 }
