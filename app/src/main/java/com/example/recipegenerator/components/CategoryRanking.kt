@@ -17,6 +17,7 @@ import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
@@ -65,62 +66,44 @@ fun CategoryRanking() {
         }
     }
 
-    val keyboardController = LocalSoftwareKeyboardController.current
-
-    Scaffold(
-        modifier = Modifier.fillMaxSize(),
-        topBar = {
-            TopAppBar(
-                colors = topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    titleContentColor = MaterialTheme.colorScheme.primary,
-                ),
-                title = {
-                    Row{
-                        Text(
-                            text = "カテゴリ検索",
-                            modifier = Modifier.padding(16.dp)
-                        )
-                        TextField(
-                            value = viewModel.searchCategoryText.value,
-                            onValueChange = { viewModel.searchCategoryText.value = it},
-                            label = { Text("カテゴリ名") },
-                            placeholder = { Text("例)肉、カレー") },
-                            maxLines = 1,
-                            keyboardOptions = KeyboardOptions.Default.copy(
-                                imeAction = ImeAction.Done
-                            ),
-                            keyboardActions = KeyboardActions(
-                                onDone = {
-                                    if(viewModel.isLargeCategoryLoaded.value) {
-                                        keyboardController?.hide()
-                                        viewModel.getMatchCategoryList()
-                                        navController.navigate("match")
-                                    }
-                                }
-                            )
-                        )
-                    }
-                }
+    NavHost(navController, startDestination = "category") {
+        composable("category") {
+            CategoryList(viewModel, navController)
+        }
+        composable("match") {
+            MatchCategoryList(viewModel, navController)
+        }
+        composable("large") {
+            LargeCategoryRanking(
+                viewModel.selectedCategoryName.value,
+                viewModel.selectedLargeId.value,
+                viewModel,
+                apiClient,
+                coroutineScope,
+                navController
             )
         }
-    ) { innerPadding ->
-        NavHost(navController, startDestination = "category") {
-            composable("category") {
-                CategoryList(viewModel, innerPadding, navController)
-            }
-            composable("match") {
-                MatchCategoryList(viewModel, innerPadding, navController)
-            }
-            composable("large") {
-                LargeCategoryRanking(viewModel.selectedCategoryName.value, viewModel.selectedLargeId.value, viewModel, apiClient, coroutineScope, innerPadding, navController)
-            }
-            composable("medium") {
-                MediumCategoryRanking(viewModel.selectedCategoryName.value, viewModel.selectedMediumId.value, viewModel.connectedId.value, viewModel, apiClient, coroutineScope, innerPadding, navController)
-            }
-            composable("small") {
-                SmallCategoryRanking(viewModel.selectedCategoryName.value, viewModel.connectedId.value, viewModel, apiClient, coroutineScope, innerPadding)
-            }
+        composable("medium") {
+            MediumCategoryRanking(
+                viewModel.selectedCategoryName.value,
+                viewModel.selectedMediumId.value,
+                viewModel.connectedId.value,
+                viewModel,
+                apiClient,
+                coroutineScope,
+                navController
+            )
+        }
+        composable("small") {
+            SmallCategoryRanking(
+                viewModel.selectedCategoryName.value,
+                viewModel.connectedId.value,
+                viewModel,
+                apiClient,
+                coroutineScope
+            )
         }
     }
+
+
 }

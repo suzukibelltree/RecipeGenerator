@@ -39,7 +39,6 @@ fun SmallCategoryRanking(
     viewModel: CategoryViewModel,
     apiClient: ApiClient,
     coroutineScope: CoroutineScope,
-    innerPadding: PaddingValues
 ) {
     LaunchedEffect(Unit) {
         coroutineScope.launch {
@@ -55,9 +54,7 @@ fun SmallCategoryRanking(
     if (viewModel.smallRankingList.isEmpty()) {
         CircularProgressIndicator()
     } else {
-        LazyColumn(
-            modifier = Modifier.padding(innerPadding)
-        ) {
+        LazyColumn {
             item { Text(text = selectedCategoryName, fontSize = 24.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(16.dp)) }
 
             item {

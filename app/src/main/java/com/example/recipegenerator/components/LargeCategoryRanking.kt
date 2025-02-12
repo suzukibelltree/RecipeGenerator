@@ -42,7 +42,6 @@ fun LargeCategoryRanking(
     viewModel: CategoryViewModel,
     apiClient: ApiClient,
     coroutineScope: CoroutineScope,
-    innerPadding: PaddingValues,
     navController: NavController
 ) {
     LaunchedEffect(Unit, viewModel.isMediumCategoryLoaded) {
@@ -60,9 +59,7 @@ fun LargeCategoryRanking(
     if (viewModel.mediumList.isEmpty() || viewModel.largeRankingList.isEmpty()) {
         CircularProgressIndicator()
     } else {
-        LazyColumn(
-            modifier = Modifier.padding(innerPadding)
-        ) {
+        LazyColumn {
             item { Text(text = selectedCategoryName, fontSize = 24.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(16.dp))}
 
             item { Text(text = "さらに絞る", fontSize = 18.sp, modifier = Modifier.padding(16.dp)) }
