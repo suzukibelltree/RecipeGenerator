@@ -8,4 +8,5 @@ interface RecipeRepository {
     suspend fun deleteRecipe(recipe: FavoriteRecipe)
     suspend fun updateRecipe(recipe: FavoriteRecipe)
     fun getAllRecipes(): Flow<List<FavoriteRecipe>>
+    suspend fun searchRecipeByTitle(title: String): FavoriteRecipe?
 }

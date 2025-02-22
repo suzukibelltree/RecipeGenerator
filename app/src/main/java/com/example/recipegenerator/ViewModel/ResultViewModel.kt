@@ -69,4 +69,8 @@ class RecipeViewModel(private val repository: DatabaseRecipeRepository) : ViewMo
     }
 
     fun getAllFavoriteRecipes() = repository.getAllRecipes()
+
+    suspend fun searchRecipeByTitle(title: String): FavoriteRecipe? {
+        return repository.searchRecipeByTitle(title)
+    }
 }

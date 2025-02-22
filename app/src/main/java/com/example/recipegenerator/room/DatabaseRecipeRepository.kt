@@ -18,4 +18,8 @@ class DatabaseRecipeRepository(
     }
 
     override fun getAllRecipes() = recipeDao.getAllRecipes()
+
+    override suspend fun searchRecipeByTitle(title: String): FavoriteRecipe? {
+        return recipeDao.searchRecipeByTitle(title)
+    }
 }

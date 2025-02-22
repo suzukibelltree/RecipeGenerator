@@ -32,6 +32,7 @@ import coil.compose.AsyncImage
 import com.example.recipegenerator.FavoriteRecipe
 import com.example.recipegenerator.Result
 import com.example.recipegenerator.ViewModel.RecipeViewModel
+import com.example.recipegenerator.getCurrentTime
 import kotlinx.coroutines.launch
 
 
@@ -91,6 +92,7 @@ fun RecipeCard(
                         result.isFavorite = isFavorite
                         scope.launch {
                             if (isFavorite) {
+                                // お気に入り登録されたならDBに保存
                                 viewModel.insertFavoriteRecipe(
                                     FavoriteRecipe(
                                         id = 0,
@@ -101,10 +103,17 @@ fun RecipeCard(
                                         nickname = result.apiData.nickname,
                                         recipeDescription = result.apiData.recipeDescription,
                                         recipeMaterial = result.apiData.recipeMaterial,
-                                        registerDate = "2021-10-01",
+                                        registerDate = getCurrentTime(),
                                         makeCount = 0
                                     )
                                 )
+                            } else {
+                                // お気に入り解除されたならDBから削除
+                                val selectedRecipe =
+                                    viewModel.searchRecipeByTitle(result.apiData.Title)
+                                if (selectedRecipe != null) {
+                                    viewModel.deleteFavoriteRecipe(selectedRecipe)
+                                }
                             }
                         }
                     },

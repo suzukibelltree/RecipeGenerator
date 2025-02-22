@@ -23,4 +23,7 @@ interface RecipeDao {
     @Query("SELECT * FROM favorite_recipes")
     fun getAllRecipes(): Flow<List<FavoriteRecipe>>
 
+    // レシピタイトルの完全一致で検索
+    @Query("SELECT * FROM favorite_recipes WHERE title = :title")
+    suspend fun searchRecipeByTitle(title: String): FavoriteRecipe?
 }
