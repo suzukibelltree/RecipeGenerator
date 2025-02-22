@@ -1,7 +1,5 @@
 package com.example.recipegenerator
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 //APIから取得したデータを格納するためのデータクラス
@@ -35,21 +33,6 @@ data class Result(
     var isFavorite: Boolean = false
 )
 
-@Entity(tableName = "favorite_recipes")
-data class FavoriteRecipe(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
-    val Title: String,
-    val url: String,
-    val Stringmage: String,
-    val cost: String,
-    val indication: String,
-    val nickname: String,
-    val recipeDescription: String,
-    val recipeMaterial: List<String>,
-    val registerDate: String,
-    val makeCount: Int = 0
-)
 
 //ResultUIのリストを格納するためのデータクラス
 data class ResultResponse(
