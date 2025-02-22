@@ -2,7 +2,7 @@ package com.example.recipegenerator.room
 
 import com.example.recipegenerator.FavoriteRecipe
 
-class DatabaseRecopeRepository(
+class DatabaseRecipeRepository(
     private val recipeDao: RecipeDao
 ) : RecipeRepository {
     override suspend fun insertRecipe(recipe: FavoriteRecipe) {
