@@ -40,7 +40,7 @@ fun ShowFavoriteRecipesList(
 
 @Composable
 fun FavoriteRecipesList(
-    results: List<Result>,
+    results: List<Result> ,
     modifier: Modifier,
     navController: NavController
 ) {
