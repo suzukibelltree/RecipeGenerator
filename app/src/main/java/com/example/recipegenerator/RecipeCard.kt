@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,7 +29,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.example.recipegenerator.FavoriteRecipe
 import com.example.recipegenerator.Result
+import com.example.recipegenerator.ViewModel.RecipeViewModel
+import com.example.recipegenerator.getCurrentTime
+import kotlinx.coroutines.launch
 
 
 @Composable
@@ -37,8 +42,10 @@ fun RecipeCard(
     navController: NavController,
     index: Int,
     modifier: Modifier = Modifier,
+    viewModel: RecipeViewModel
 ) {
     var isFavorite by remember { mutableStateOf(result.isFavorite) }
+    val scope = rememberCoroutineScope()
     Card(
         colors = CardDefaults.cardColors(),
         modifier = modifier
@@ -83,6 +90,32 @@ fun RecipeCard(
                     onClick = {
                         isFavorite = !isFavorite
                         result.isFavorite = isFavorite
+                        scope.launch {
+                            if (isFavorite) {
+                                // お気に入り登録されたならDBに保存
+                                viewModel.insertFavoriteRecipe(
+                                    FavoriteRecipe(
+                                        id = 0,
+                                        title = result.apiData.Title,
+                                        url = result.apiData.url,
+                                        cost = result.apiData.cost,
+                                        indication = result.apiData.indication,
+                                        nickname = result.apiData.nickname,
+                                        recipeDescription = result.apiData.recipeDescription,
+                                        recipeMaterial = result.apiData.recipeMaterial,
+                                        registerDate = getCurrentTime(),
+                                        makeCount = 0
+                                    )
+                                )
+                            } else {
+                                // お気に入り解除されたならDBから削除
+                                val selectedRecipe =
+                                    viewModel.searchRecipeByTitle(result.apiData.Title)
+                                if (selectedRecipe != null) {
+                                    viewModel.deleteFavoriteRecipe(selectedRecipe)
+                                }
+                            }
+                        }
                     },
                     modifier = Modifier
                         .padding(8.dp)

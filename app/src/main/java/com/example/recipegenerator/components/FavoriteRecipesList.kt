@@ -10,20 +10,23 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.example.recipegenerator.Result
 import com.example.recipegenerator.ViewModel.RecipeUiState
+import com.example.recipegenerator.ViewModel.RecipeViewModel
 
 
 @Composable
 fun ShowFavoriteRecipesList(
     recipeUiState: RecipeUiState,
     modifier: Modifier = Modifier,
-    navController: NavController
+    navController: NavController,
+    viewModel: RecipeViewModel
 ) {
     when (recipeUiState) {
         is RecipeUiState.Success -> {
             FavoriteRecipesList(
                 results = recipeUiState.results,
                 modifier = modifier,
-                navController = navController
+                navController = navController,
+                viewModel = viewModel
             )
         }
 
@@ -42,7 +45,8 @@ fun ShowFavoriteRecipesList(
 fun FavoriteRecipesList(
     results: List<Result>,
     modifier: Modifier,
-    navController: NavController
+    navController: NavController,
+    viewModel: RecipeViewModel
 ) {
     val favoriteRecipes = remember {
         mutableStateListOf<Result>().apply {
@@ -54,7 +58,8 @@ fun FavoriteRecipesList(
             RecipeCard(
                 result = recipe,
                 index = index,
-                navController = navController
+                navController = navController,
+                viewModel = viewModel
             )
         }
     }

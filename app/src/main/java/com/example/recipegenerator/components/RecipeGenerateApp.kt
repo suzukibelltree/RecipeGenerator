@@ -5,19 +5,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.example.recipegenerator.ViewModel.RecipeUiState
+import com.example.recipegenerator.ViewModel.RecipeViewModel
 
 @Composable
 fun RecipeGenerateApp(
     recipeUiState: RecipeUiState,
     modifier: Modifier = Modifier,
-    navController: NavController
+    navController: NavController,
+    viewModel: RecipeViewModel
 ) {
     when (recipeUiState) {
         is RecipeUiState.Success -> {
             PopularRecipeList(
                 recipes = recipeUiState.results,
                 modifier = modifier,
-                navController = navController
+                navController = navController,
+                viewModel = viewModel
             )
         }
 

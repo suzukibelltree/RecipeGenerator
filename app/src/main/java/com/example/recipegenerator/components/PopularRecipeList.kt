@@ -6,12 +6,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.example.recipegenerator.Result
+import com.example.recipegenerator.ViewModel.RecipeViewModel
 
 @Composable
 fun PopularRecipeList(
     recipes: List<Result>,
     modifier: Modifier = Modifier,
-    navController: NavController
+    navController: NavController,
+    viewModel: RecipeViewModel
 ) {
     LazyColumn(
         modifier = modifier
@@ -20,7 +22,8 @@ fun PopularRecipeList(
             RecipeCard(
                 result = recipe,
                 navController = navController,
-                index = index
+                index = index,
+                viewModel = viewModel
             )
         }
     }

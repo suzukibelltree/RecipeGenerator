@@ -33,6 +33,7 @@ data class Result(
     var isFavorite: Boolean = false
 )
 
+
 //ResultUIのリストを格納するためのデータクラス
 data class ResultResponse(
     @SerializedName("result")
