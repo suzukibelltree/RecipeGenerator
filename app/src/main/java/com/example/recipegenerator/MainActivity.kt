@@ -80,7 +80,9 @@ class MainActivity : ComponentActivity() {
                                     (recipeViewModel.recipeUiState as? RecipeUiState.Success)?.results
 
                                 if (index != null && recipeList != null && index in recipeList.indices) {
-                                    RecipeDetailScreen(recipe = recipeList[index])
+                                    RecipeDetailScreen(
+                                        recipe = recipeList[index],
+                                        navController = navController)
                                 }
                             }
 
