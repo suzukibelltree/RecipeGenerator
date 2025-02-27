@@ -10,6 +10,8 @@ import com.example.recipegenerator.FavoriteRecipe
 import com.example.recipegenerator.Result
 import com.example.recipegenerator.network.ApiClient
 import com.example.recipegenerator.room.DatabaseRecipeRepository
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import java.io.IOException
 
@@ -23,8 +25,12 @@ class RecipeViewModel(private val repository: DatabaseRecipeRepository) : ViewMo
     var recipeUiState: RecipeUiState by mutableStateOf(RecipeUiState.Loading)
         private set
 
+    private val _favoriteRecipes = MutableStateFlow<List<FavoriteRecipe>>(emptyList())
+    val favoriteRecipes: StateFlow<List<FavoriteRecipe>> = _favoriteRecipes
+
     init {
         getRecipeList()
+        getAllFavoriteRecipes()
     }
 
     fun getRecipeList() {
@@ -68,7 +74,13 @@ class RecipeViewModel(private val repository: DatabaseRecipeRepository) : ViewMo
         repository.updateRecipe(recipe)
     }
 
-    fun getAllFavoriteRecipes() = repository.getAllRecipes()
+    fun getAllFavoriteRecipes() {
+        viewModelScope.launch {
+            repository.getAllRecipes().collect { recipes ->
+                _favoriteRecipes.value = recipes
+            }
+        }
+    }
 
     suspend fun searchRecipeByTitle(title: String): FavoriteRecipe? {
         return repository.searchRecipeByTitle(title)

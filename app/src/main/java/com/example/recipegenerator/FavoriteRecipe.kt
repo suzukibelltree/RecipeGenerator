@@ -9,6 +9,7 @@ data class FavoriteRecipe(
     val id: Int = 0,
     val title: String,
     val url: String,
+    val foodImageUrl: String,
     val cost: String,
     val indication: String,
     val nickname: String,
