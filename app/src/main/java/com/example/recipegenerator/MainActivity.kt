@@ -21,6 +21,7 @@ import com.example.recipegenerator.ViewModel.RecipeViewModel
 import com.example.recipegenerator.ViewModel.RecipeViewModelFactory
 import com.example.recipegenerator.components.BottomNavigation
 import com.example.recipegenerator.components.CategoryRanking
+import com.example.recipegenerator.components.HistoryScreen
 import com.example.recipegenerator.components.HomeNavigation
 import com.example.recipegenerator.components.RecipeDetailScreen
 import com.example.recipegenerator.components.RecipeGenerateApp
@@ -82,7 +83,7 @@ class MainActivity : ComponentActivity() {
                                 )
                             }
                             composable(route = "history") {
-
+                                HistoryScreen(viewModel = recipeViewModel)
                             }
                             composable(route = "detail/{recipeIndex}") { backStackEntry ->
                                 val index = backStackEntry.arguments?.getString("recipeIndex")

@@ -98,6 +98,7 @@ fun RecipeCard(
                                         id = 0,
                                         title = result.apiData.Title,
                                         url = result.apiData.url,
+                                        foodImageUrl = result.apiData.foodimage,
                                         cost = result.apiData.cost,
                                         indication = result.apiData.indication,
                                         nickname = result.apiData.nickname,
